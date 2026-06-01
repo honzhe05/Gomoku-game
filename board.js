@@ -1,7 +1,4 @@
-const API =
-  window.location.hostname === "localhost"
-    ? "http://127.0.0.1:5000"
-    : "https://gomoku-game-xs81.onrender.com";
+const API = "https://gomoku-game-xs81.onrender.com";
 
 const size = 15;
 let board = [];
@@ -40,6 +37,18 @@ function renderBoard(board) {
   }
 }
 
+function setStone(i, j, player) {
+  const cell = cells[i][j];
+
+  if (cell.dataset.filled === "1") return;
+
+  const stone = document.createElement("div");
+  stone.className = "stone " + (player === 1 ? "black" : "white");
+
+  cell.appendChild(stone);
+  cell.dataset.filled = "1";
+}
+
 function createBoard() {
   boardDiv.innerHTML = "";
 
@@ -68,7 +77,7 @@ function createBoard() {
 
 async function reDraw() {
   if (!game_id) return;
-  
+
   const res = await fetch(`${API}/state`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -76,9 +85,14 @@ async function reDraw() {
   });
 
   const data = await res.json();
-  board = data.board;
 
-  renderBoard(board);
+  for (let i = 0; i < 15; i++) {
+    for (let j = 0; j < 15; j++) {
+      if (data.board[i][j] !== 0 && !cells[i][j].dataset.filled) {
+        setStone(i, j, data.board[i][j]);
+      }
+    }
+  }
 }
 
 window.onload = async () => {
@@ -96,34 +110,30 @@ window.onload = async () => {
 
   const data = await res.json();
   game_id = data.game_id;
+  player = data.player;
 
   reDraw();
 };
 
 async function placeStone(row, col) {
   if (!game_id) return;
-  
+
   const res = await fetch(`${API}/move`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      game_id,
-      row,
-      col
-    })
+    body: JSON.stringify({ game_id, row, col })
   });
 
   const data = await res.json();
 
-  if (data.success) {
-    player = data.player;
-    reDraw();
-    
-    if (data.winner) {
-      win = (data.winner == 1) ? "black": "white";
-      alert("winner: " + win);
-      return;
-    }
+  if (!data.success) return;
+
+  setStone(data.row, data.col, data.player);
+
+  player = data.player;
+
+  if (data.winner) {
+    alert(data.winner === 1 ? "black win" : "white win");
   }
 }
 

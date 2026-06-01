@@ -107,7 +107,9 @@ def move():
 
     return jsonify({
         "success": True,
-        "player": 3 - player,
+        "row": row,
+        "col": col,
+        "player": player,
         "winner": winner
     })
     
