@@ -138,7 +138,7 @@ async function resetGame() {
     body: JSON.stringify({ game_id })
   });
 
-  player = 1
+  player = 2
   createBoard();
   const stone = document.getElementById("turn-stone");
   if (!stone) return;
