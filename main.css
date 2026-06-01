@@ -127,3 +127,25 @@ h3 {
 .right::after {
   width: 50%;
 }
+
+#playscreen {
+  display: none;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.game-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+@media (min-width: 900px) {
+  .game-wrapper {
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+  }
+}

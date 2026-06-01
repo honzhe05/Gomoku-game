@@ -134,7 +134,7 @@ async function resetGame() {
 function startTwoPlayer() {
   document.getElementById("menu").style.display = "none";
 
-  document.getElementById("playscreen").style.display = "grid";
+  document.getElementById("playscreen").style.display = "flex";
 
   createBoard();
 
