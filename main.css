@@ -160,6 +160,9 @@ h3 {
     align-items: flex-start;
     gap: 40px;
   }
+  h3 {
+    font-size: 11px;
+  }
 }
 
 #turn-indicator {
