@@ -119,7 +119,8 @@ async function placeStone(row, col) {
     alert(data.winner === 1 ? "black win" : "white win");
   }
   
-  if (level && player === 2) {
+  if (level) {
+    player = 2
     isThinking = true;
   
     setTimeout(async () => {
@@ -138,7 +139,7 @@ async function resetGame() {
     body: JSON.stringify({ game_id })
   });
 
-  player = 2
+  player = 1
   createBoard();
   const stone = document.getElementById("turn-stone");
   if (!stone) return;

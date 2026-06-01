@@ -4,18 +4,6 @@ import random
 size = 15
 
 def easy_mode(board):
-    stone_count = 0
-    for row in board:
-        for cell in row:
-            if cell != 0:
-                stone_count += 1
-
-    if stone_count == 0:
-        return random.choice([
-            (7, 7), (7, 6), (7, 8),
-            (6, 7), (8, 7)
-        ])
-        
     for i in range(size): # check win
         for j in range(size):
             if board[i][j] != 0:
