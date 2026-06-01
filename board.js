@@ -139,6 +139,7 @@ function updateTurnIndicator() {
 
 async function startTwoPlayer() {
   document.getElementById("menu").classList.add("hidden");
+  document.getElementById("sign").classList.remove("hidden");
   document.getElementById("playscreen").classList.remove("hidden");
   
   createBoard();
@@ -148,6 +149,7 @@ async function startTwoPlayer() {
 
 function backToMain() {
   document.getElementById("menu").classList.remove("hidden");
+  document.getElementById("sign").classList.add("hidden");
   document.getElementById("playscreen").classList.add("hidden");
 }
 
