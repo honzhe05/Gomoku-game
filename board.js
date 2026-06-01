@@ -137,7 +137,6 @@ function startTwoPlayer() {
   document.getElementById("playscreen").style.display = "flex";
 
   createBoard();
-
   initGame();
 }
 
