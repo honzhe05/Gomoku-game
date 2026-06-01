@@ -124,26 +124,21 @@ async function resetGame() {
     body: JSON.stringify({ game_id })
   });
 
-  cells.length = 0;
-
-  createBoard();
-
   player = 1;
+  createBoard();
 }
 
 function startTwoPlayer() {
-  document.getElementById("menu").style.display = "none";
-
-  document.getElementById("playscreen").style.display = "flex";
+  document.getElementById("menu").classList.add("hidden");
+  document.getElementById("playscreen").classList.remove("hidden");
 
   createBoard();
   initGame();
 }
 
 function backToMain() {
-  document.getElementById("menu").style.display = "flex";
-
-  document.getElementById("playscreen").style.display = "none";
+  document.getElementById("menu").classList.remove("hidden");
+  document.getElementById("playscreen").classList.add("hidden");
 }
 
 function vsAi() {

@@ -10,7 +10,7 @@
   <body>
     <h1 class="title" onclick="backToMain()">Gomoku</h1>
     
-    <div id="menu" style="display:flex; flex-direction:column;">
+    <div id="menu">
       <div style="display:flex; justify-content:center; gap:10px;">
         <button class="btn" onclick="startTwoPlayer()">
           Two-Player
@@ -24,7 +24,7 @@
       </div>
       
     </div>
-    <div id="playscreen">
+    <div id="playscreen" class="hidden">
       <div class="game-wrapper">
         <div id="Board"></div>
         
