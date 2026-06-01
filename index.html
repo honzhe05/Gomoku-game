@@ -12,18 +12,35 @@
     
     <div id="menu">
       <div style="display:flex; justify-content:center; gap:10px;">
-        <button class="btn" onclick="startTwoPlayer()">
+        <button class="btn" onclick="startPlay()">
           Two-Player
         </button>
-        <button class="btn" onclick="vsAi()">
+        <button class="btn" onclick="toSelectLevel()">
           v.s. AI
         </button>
       </div>
       <div class="little">
         <h3>You can choose to play against a friend, or if you're single, you can play against an AI machine.<br>Powered by Honzhe and ChatGPT(#</h3>
       </div>
-      
     </div>
+      
+    <div id="levelmenu" class="hidden">
+      <div style="display:flex; justify-content:center;">
+        <button class="btn" onclick="selectEasy()">
+          Easy
+        </button>
+        <button class="btn" onclick="incom()">
+          Normal
+        </button>
+        <button class="btn" onclick="incom()">
+          Hard
+        </button>
+      </div>
+      <div class="little">
+        <h3>You can choose to play against a friend, or if you're single, you can play against an AI machine.<br>Powered by Honzhe and ChatGPT(#</h3>
+      </div>
+    </div>
+    
     <div id="playscreen" class="hidden">
       <div class="game-wrapper">
         <div id="Board"></div>

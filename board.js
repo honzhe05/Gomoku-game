@@ -4,6 +4,8 @@ const size = 15;
 const cells = [];
 let player = 1;
 let game_id;
+let level = "";
+let isThinking = false;
 
 const boardDiv = document.getElementById("Board");
 
@@ -95,6 +97,8 @@ async function initGame() {
 
 async function placeStone(row, col) {
   if (!game_id) return;
+  if (isThinking) return;
+  if (player === 2 && level) return;
 
   const res = await fetch(`${API}/move`, {
     method: "POST",
@@ -114,6 +118,17 @@ async function placeStone(row, col) {
   if (data.winner) {
     alert(data.winner === 1 ? "black win" : "white win");
   }
+  
+  if (level && player === 2) {
+    isThinking = true;
+    boardDiv.style.pointerEvents = "none";
+  
+    setTimeout(async () => {
+      await aiTurn();
+      isThinking = false;
+      boardDiv.style.pointerEvents = "auto";
+    }, 300);
+  }
 }
 
 async function resetGame() {
@@ -130,6 +145,27 @@ async function resetGame() {
   updateTurnIndicator();
 }
 
+async function aiTurn() {
+  if (!game_id || player != 2) return;
+  
+  const res = await fetch(`${API}/ai_move`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ game_id, level })
+  });
+  
+  const data = await res.json();
+  
+  setStone(data.row, data.col, data.player);
+  
+  player = data.player;
+  updateTurnIndicator();
+
+  if (data.winner) {
+    alert(data.winner === 1 ? "You win" : "AI win");
+  }
+}
+
 function updateTurnIndicator() {
   const stone = document.getElementById("turn-stone");
   if (!stone) return;
@@ -137,7 +173,7 @@ function updateTurnIndicator() {
   stone.style.background = (player === 2) ? "black" : "white";
 }
 
-async function startTwoPlayer() {
+async function startPlay() {
   document.getElementById("menu").classList.add("hidden");
   document.getElementById("sign").classList.remove("hidden");
   document.getElementById("playscreen").classList.remove("hidden");
@@ -151,8 +187,22 @@ function backToMain() {
   document.getElementById("menu").classList.remove("hidden");
   document.getElementById("sign").classList.add("hidden");
   document.getElementById("playscreen").classList.add("hidden");
+  document.getElementById("levelmenu").classList.add("hidden")
 }
 
-function vsAi() {
+function toSelectLevel() {
+  document.getElementById("menu").classList.add("hidden")
+  document.getElementById("levelmenu").classList.remove("hidden")
+}
+
+async function selectEasy() {
+  level = "easy";
+  document.getElementById("levelmenu").classList.add("hidden")
+  
+  await resetGame();
+  await startPlay();
+}
+
+function incom() {
   alert("How could that be? (Incomplete)");
 }

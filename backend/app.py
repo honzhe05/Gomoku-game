@@ -3,6 +3,8 @@ from flask_cors import CORS
 import sqlite3
 import os
 from init_db import init_db
+from easy_mode import easy_mode
+from check_win import check_win
 
 init_db()
 
@@ -19,48 +21,23 @@ def get_db():
     conn.row_factory = sqlite3.Row
     return conn
     
-def check_win(game_id, row, col, player):
+def get_board(game_id):
     conn = get_db()
     cur = conn.cursor()
 
     cur.execute("""
-        SELECT row, col, player
+        SELECT row,col,player
         FROM moves
-        WHERE game_id = ?
+        WHERE game_id=?
     """, (game_id,))
 
     moves = cur.fetchall()
 
     board = [[0]*15 for _ in range(15)]
-    for r, c, p in moves:
+    for r,c,p in moves:
         board[r][c] = p
-        
-    directions = [
-        (1, 0),   # 左右
-        (0, 1),   # 上下
-        (1, 1),   # 斜 \
-        (1, -1)   # 斜 /
-    ]
 
-    for dr, dc in directions:
-        count = 1 
-        
-        r, c = row + dr, col + dc
-        while 0 <= r < 15 and 0 <= c < 15 and board[r][c] == player:
-            count += 1
-            r += dr
-            c += dc
-
-        r, c = row - dr, col - dc
-        while 0 <= r < 15 and 0 <= c < 15 and board[r][c] == player:
-            count += 1
-            r -= dr
-            c -= dc
-
-        if count >= 5:
-            return True
-
-    return False
+    return board
 
 @app.route("/move", methods=["POST"])
 def move():
@@ -96,9 +73,11 @@ def move():
         INSERT INTO moves (game_id,row,col,player,move_num)
         VALUES (?,?,?,?,?)
     """, (game_id, row, col, player, count + 1))
+    
+    board = get_board(game_id)
 
     winner = None
-    if check_win(game_id, row, col, player):
+    if check_win(board, row, col, player):
         winner = player
         cur.execute("UPDATE games SET status='finished' WHERE id=?", (game_id,))
 
@@ -117,24 +96,7 @@ def move():
 def state():
     data = request.json
     game_id = data["game_id"]
-
-    conn = get_db()
-    cur = conn.cursor()
-
-    cur.execute("""
-        SELECT row, col, player
-        FROM moves
-        WHERE game_id = ?
-        ORDER BY move_num
-    """, (game_id,))
-
-    moves = cur.fetchall()
-
-    board = [[0]*15 for _ in range(15)]
-    for row, col, player in moves:
-        board[row][col] = player
-    
-    return jsonify({ "board": board })
+    return jsonify({ "board": get_board(game_id) })
     
 @app.route("/get_game", methods=["POST"])
 def get_game():
@@ -201,6 +163,61 @@ def reset():
 
     return jsonify({
         "success": True
+    })
+    
+@app.route("/ai_move", methods=["POST"])
+def ai_move():
+    data = request.json
+    level = data["level"]
+    game_id = data["game_id"]
+
+    conn = get_db()
+    cur = conn.cursor()
+
+    board = get_board(game_id)
+
+    # choose AI move
+    if level == "easy":
+        row, col = easy_mode(board)
+    # elif level == "normal":
+    #     row, col = normal_mode(board)
+    # else:
+    #     row, col = hard_mode(board)
+
+    player = 2
+
+    # get move count
+    cur.execute("""
+        SELECT COUNT(*) FROM moves WHERE game_id=?
+    """, (game_id,))
+    count = cur.fetchone()[0]
+
+    # insert AI move
+    cur.execute("""
+        INSERT INTO moves (game_id, row, col, player, move_num)
+        VALUES (?, ?, ?, ?, ?)
+    """, (game_id, row, col, player, count + 1))
+
+    # rebuild board after move (optional but clean)
+    board = get_board(game_id)
+
+    winner = None
+    if check_win(board, row, col, player):
+        winner = player
+        cur.execute("""
+            UPDATE games SET status='finished'
+            WHERE id=?
+        """, (game_id,))
+
+    conn.commit()
+    conn.close()
+
+    return jsonify({
+        "success": True,
+        "row": row,
+        "col": col,
+        "player": player,
+        "winner": winner
     })
 
 if __name__ == "__main__":
