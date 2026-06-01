@@ -67,7 +67,7 @@ def move():
 
     cur.execute("SELECT COUNT(*) FROM moves WHERE game_id = ?", (game_id,))
     count = cur.fetchone()[0]
-    player = 1 if count % 2 == 0 else 2
+    player = 2 if count % 2 == 0 else 1
 
     cur.execute("""
         INSERT INTO moves (game_id,row,col,player,move_num)

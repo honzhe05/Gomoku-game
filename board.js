@@ -121,12 +121,10 @@ async function placeStone(row, col) {
   
   if (level && player === 2) {
     isThinking = true;
-    boardDiv.style.pointerEvents = "none";
   
     setTimeout(async () => {
       await aiTurn();
       isThinking = false;
-      boardDiv.style.pointerEvents = "auto";
     }, 300);
   }
 }
@@ -140,9 +138,11 @@ async function resetGame() {
     body: JSON.stringify({ game_id })
   });
 
-  player = 2
+  player = 1
   createBoard();
-  updateTurnIndicator();
+  const stone = document.getElementById("turn-stone");
+  if (!stone) return;
+  stone.style.background = "black";
 }
 
 async function aiTurn() {
@@ -158,7 +158,7 @@ async function aiTurn() {
   
   setStone(data.row, data.col, data.player);
   
-  player = data.player;
+  player = 1;
   updateTurnIndicator();
 
   if (data.winner) {
@@ -198,9 +198,10 @@ function toSelectLevel() {
 async function selectEasy() {
   level = "easy";
   document.getElementById("levelmenu").classList.add("hidden")
+  document.getElementById("playscreen").classList.remove("hidden");
   
+  await initGame();
   await resetGame();
-  await startPlay();
 }
 
 function incom() {
