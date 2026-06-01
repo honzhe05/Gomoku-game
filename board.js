@@ -9,6 +9,17 @@ let isThinking = false;
 
 const boardDiv = document.getElementById("Board");
 
+function check_win(winner) {
+  if (!winner) return false;
+
+  if (level) {
+    alert(winner === 2 ? "AI win" : "You win");
+  } else {
+    alert(winner === 1 ? "Black win" : "White win");
+  }
+  return true;
+}
+
 function setStone(i, j, player) {
   const cell = cells[i][j];
 
@@ -88,11 +99,10 @@ async function initGame() {
   });
 
   const data = await res.json();
-
   game_id = data.game_id;
   player = data.player;
-
-  reDraw();
+  
+  await reDraw();
 }
 
 async function placeStone(row, col) {
@@ -114,9 +124,9 @@ async function placeStone(row, col) {
   
   player = data.player;
   updateTurnIndicator();
-
-  if (data.winner) {
-    alert(data.winner === 1 ? "black win" : "white win");
+  
+  if (check_win(data.winner)) {
+    return;
   }
   
   if (level) {
@@ -132,6 +142,8 @@ async function placeStone(row, col) {
 
 async function resetGame() {
   if (!game_id) return;
+  
+  createBoard();
 
   await fetch(`${API}/reset`, {
     method: "POST",
@@ -140,7 +152,6 @@ async function resetGame() {
   });
 
   player = 1
-  createBoard();
   const stone = document.getElementById("turn-stone");
   if (!stone) return;
   stone.style.background = "black";
@@ -156,15 +167,12 @@ async function aiTurn() {
   });
   
   const data = await res.json();
-  
   setStone(data.row, data.col, data.player);
   
-  player = 1;
   updateTurnIndicator();
-
-  if (data.winner) {
-    alert(data.winner === 1 ? "You win" : "AI win");
-  }
+  player = 1;
+  
+  check_win(data.winner);
 }
 
 function updateTurnIndicator() {
@@ -184,11 +192,17 @@ async function startPlay() {
   updateTurnIndicator();
 }
 
-function backToMain() {
+async function backToMain() {
   document.getElementById("menu").classList.remove("hidden");
   document.getElementById("sign").classList.add("hidden");
   document.getElementById("playscreen").classList.add("hidden");
   document.getElementById("levelmenu").classList.add("hidden")
+  
+  if (level) {
+    await initGame();
+    await resetGame();
+  }
+  level = "";
 }
 
 function toSelectLevel() {
@@ -200,7 +214,9 @@ async function selectEasy() {
   level = "easy";
   document.getElementById("levelmenu").classList.add("hidden")
   document.getElementById("playscreen").classList.remove("hidden");
+  document.getElementById("sign").classList.remove("hidden");
   
+  createBoard();
   await initGame();
   await resetGame();
 }
