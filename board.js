@@ -1,7 +1,7 @@
 const API =
-  location.hostname === "localhost"
+  window.location.hostname === "localhost"
     ? "http://127.0.0.1:5000"
-    : "https://your-app.onrender.com";
+    : "https://gomoku-game-xs81.onrender.com";
 
 const size = 15;
 let board = [];
