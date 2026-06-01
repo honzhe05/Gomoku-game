@@ -20,7 +20,7 @@ function check_win(winner) {
   return true;
 }
 
-function setStone(i, j, player) {
+async function setStone(i, j, player) {
   const cell = cells[i][j];
 
   if (cell.dataset.filled === "1") return;
@@ -120,16 +120,11 @@ async function placeStone(row, col) {
 
   if (!data.success) return;
 
-  setStone(data.row, data.col, data.player);
-  
   player = data.player;
+  await setStone(data.row, data.col, player);
   updateTurnIndicator();
   
-  if (check_win(data.winner)) {
-    return;
-  }
-  
-  if (level) {
+  if (level && !check_win(data.winner)) {
     player = 2
     isThinking = true;
   
@@ -167,7 +162,7 @@ async function aiTurn() {
   });
   
   const data = await res.json();
-  setStone(data.row, data.col, data.player);
+  await setStone(data.row, data.col, data.player);
   
   updateTurnIndicator();
   player = 1;
