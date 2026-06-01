@@ -74,9 +74,7 @@ async function reDraw() {
   }
 }
 
-window.onload = async () => {
-  createBoard();
-
+async function initGame() {
   if (!localStorage.uuid) {
     localStorage.uuid = crypto.randomUUID();
   }
@@ -88,11 +86,12 @@ window.onload = async () => {
   });
 
   const data = await res.json();
+
   game_id = data.game_id;
   player = data.player;
 
   reDraw();
-};
+}
 
 async function placeStone(row, col) {
   if (!game_id) return;
@@ -130,4 +129,24 @@ async function resetGame() {
   createBoard();
 
   player = 1;
+}
+
+function startTwoPlayer() {
+  document.getElementById("menu").style.display = "none";
+
+  document.getElementById("playscreen").style.display = "grid";
+
+  createBoard();
+
+  initGame();
+}
+
+function backToMain() {
+  document.getElementById("menu").style.display = "flex";
+
+  document.getElementById("playscreen").style.display = "none";
+}
+
+function vsAi() {
+  alert("How could that be? (Incomplete)");
 }
