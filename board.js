@@ -137,12 +137,12 @@ function updateTurnIndicator() {
   stone.style.background = (player === 2) ? "black" : "white";
 }
 
-function startTwoPlayer() {
+async function startTwoPlayer() {
   document.getElementById("menu").classList.add("hidden");
   document.getElementById("playscreen").classList.remove("hidden");
-
+  
   createBoard();
-  initGame();
+  await initGame();
   updateTurnIndicator();
 }
 
