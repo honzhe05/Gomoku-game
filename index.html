@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Gomoku</title>
+    
+    <link rel="stylesheet" href="./main.css">
+  </head>
+  <body>
+    <h1 class="title">Gomoku</h1>
+    
+    <div style="display:flex; align-items:center;">
+      <button class="btn" type="submit">
+        Two-Player
+      </button>
+      <button class="btn" type="submit">
+        v.s. AI
+      </button>
+      <button class="btn" type="submit" onclick="resetGame()">Reset</button>
+    </div>
+    
+    <div id="Board"></div>
+    
+    <script src="./board.js"></script>
+  </body>
+</html>
