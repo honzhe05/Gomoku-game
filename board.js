@@ -67,6 +67,8 @@ function createBoard() {
 }
 
 async function reDraw() {
+  if (!game_id) return;
+  
   const res = await fetch(`${API}/state`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -99,6 +101,8 @@ window.onload = async () => {
 };
 
 async function placeStone(row, col) {
+  if (!game_id) return;
+  
   const res = await fetch(`${API}/move`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -124,6 +128,8 @@ async function placeStone(row, col) {
 }
 
 async function resetGame() {
+  if (!game_id) return;
+  
   await fetch(`${API}/reset`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
