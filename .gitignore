@@ -1,2 +1,2 @@
 *.db
-./backend/init_db.py
+backend/init_db.py
