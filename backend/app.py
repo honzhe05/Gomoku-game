@@ -168,7 +168,7 @@ def get_game():
     
     count = cur.fetchone()[0]
     
-    next_player = 1 if count % 2 == 0 else 2
+    next_player = 2 if count % 2 == 0 else 1
     
     conn.close()
     
