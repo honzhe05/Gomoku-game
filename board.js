@@ -107,8 +107,9 @@ async function placeStone(row, col) {
   if (!data.success) return;
 
   setStone(data.row, data.col, data.player);
-
+  
   player = data.player;
+  updateTurnIndicator();
 
   if (data.winner) {
     alert(data.winner === 1 ? "black win" : "white win");
@@ -124,8 +125,16 @@ async function resetGame() {
     body: JSON.stringify({ game_id })
   });
 
-  player = 1;
+  player = 2
   createBoard();
+  updateTurnIndicator();
+}
+
+function updateTurnIndicator() {
+  const stone = document.getElementById("turn-stone");
+  if (!stone) return;
+
+  stone.style.background = (player === 2) ? "black" : "white";
 }
 
 function startTwoPlayer() {
@@ -134,6 +143,7 @@ function startTwoPlayer() {
 
   createBoard();
   initGame();
+  updateTurnIndicator();
 }
 
 function backToMain() {

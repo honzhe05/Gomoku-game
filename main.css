@@ -46,11 +46,11 @@ h3 {
 #Board {
   display: grid;
   grid-template-columns: repeat(15, 1fr);
-  width: min(90vw, 600px);
+  width: min(90vw, 550px);
   aspect-ratio: 1;
   margin: auto;
   background: #d8b37a;
-  padding: calc((min(90vw, 600px) / 15) / 4);
+  padding: calc((min(90vw, 550px) / 15) / 4);
   box-sizing: border-box;
 }
 
@@ -159,4 +159,18 @@ h3 {
     align-items: flex-start;
     gap: 40px;
   }
+}
+
+#turn-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+#turn-stone {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid #000;
 }

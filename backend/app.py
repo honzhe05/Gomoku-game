@@ -160,11 +160,23 @@ def get_game():
         """, (uuid,))
         game_id = cur.lastrowid
         conn.commit()
-
-    conn.close()
-
-    return jsonify({ "game_id": game_id })
+        
+    cur.execute("""
+        SELECT COUNT(*) FROM moves
+        WHERE game_id = ?
+    """, (game_id,))
     
+    count = cur.fetchone()[0]
+    
+    next_player = 1 if count % 2 == 0 else 2
+    
+    conn.close()
+    
+    return jsonify({
+        "game_id": game_id,
+        "player": next_player
+    })
+
 @app.route("/reset", methods=["POST"])
 def reset():
     data = request.json
