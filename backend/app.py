@@ -222,7 +222,8 @@ def ai_move():
         "row": row,
         "col": col,
         "player": player,
-        "winner": winner
+        "winner": winner,
+        "count": count + 1
     })
 
 if __name__ == "__main__":

@@ -133,7 +133,11 @@ async function placeStone(row, col) {
   await setStone(data.row, data.col, player);
   updateTurnIndicator();
   
-  if (level && !check_win(data.winner, data.count)) {
+  if (check_win(data.winner, data.count)) {
+    return;
+  }
+  
+  if (level) {
     player = 2
     isThinking = true;
   
