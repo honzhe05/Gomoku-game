@@ -88,7 +88,7 @@ def normal_mode(board):
     maxi, pos = 0, (-1, -1)
     for i in range(size):
         for j in range(size):
-            if score[i][j] > maxi:
+            if score[i][j] > maxi and board[i][j] == 0:
                 maxi = score[i][j]
                 pos = (i, j)
                 
