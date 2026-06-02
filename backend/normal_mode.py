@@ -60,7 +60,7 @@ def normal_mode(board):
                 board[i][j] = 2
                 attack = 0
                 for nx, ny in dirs:
-                    attack += line_info(board, i, j, nx, ny, 2)
+                    attack += line_info(board, i, j, nx, ny, 2) * 0.5
                     
                 board[i][j] = 1
                 defense = 0
@@ -69,23 +69,24 @@ def normal_mode(board):
                     
                 board[i][j] = 0
                 
-                defense *= 1.8 + (defense / 1000000)
                 score[i][j] = attack + defense
+     
+    t = random.randint(0, 10)
+    if t not in [0, 1, 2]:
+        maxi, pos = 0, (-1, -1)
+        for i in range(size):
+            for j in range(size):
+                if score[i][j] > maxi and board[i][j] == 0:
+                    maxi = score[i][j]
+                    pos = (i, j)
                     
-    maxi, pos = 0, (-1, -1)
-    for i in range(size):
-        for j in range(size):
-            if score[i][j] > maxi and board[i][j] == 0:
-                maxi = score[i][j]
-                pos = (i, j)
-                
-    if pos != (-1, -1):
-        return pos
-        
-    empty = []
-    for i in range(size): # random choice
-        for j in range(size):
-            if board[i][j] == 0:
-                empty.append((i, j))
-        
-    return random.choice(empty)
+        if pos != (-1, -1):
+            return pos
+    else:
+        empty = []
+        for i in range(size): # random choice
+            for j in range(size):
+                if board[i][j] == 0:
+                    empty.append((i, j))
+            
+        return random.choice(empty)
