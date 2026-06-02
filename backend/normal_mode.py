@@ -71,6 +71,12 @@ def normal_mode(board):
                 
                 score[i][j] = attack + defense
      
+    empty = []
+    for i in range(size): # random choice
+        for j in range(size):
+            if board[i][j] == 0:
+                empty.append((i, j))
+     
     t = random.randint(0, 10)
     if t not in [0, 1, 2]:
         maxi, pos = 0, (-1, -1)
@@ -82,11 +88,6 @@ def normal_mode(board):
                     
         if pos != (-1, -1):
             return pos
+        return random.choice(empty)
     else:
-        empty = []
-        for i in range(size): # random choice
-            for j in range(size):
-                if board[i][j] == 0:
-                    empty.append((i, j))
-            
         return random.choice(empty)
