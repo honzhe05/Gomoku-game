@@ -91,7 +91,8 @@ def move():
         "row": row,
         "col": col,
         "player": player,
-        "winner": winner
+        "winner": winner,
+        "count": count + 1
     })
     
 @app.route("/state", methods=["POST"])

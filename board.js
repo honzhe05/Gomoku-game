@@ -9,14 +9,23 @@ let isThinking = false;
 
 const boardDiv = document.getElementById("Board");
 
-function check_win(winner) {
+function check_win(winner, cnt) {
   if (!winner) return false;
 
   if (level) {
-    alert(winner === 2 ? "AI win" : "You win");
+    if (winner === 1) {
+      alert(`You won after ${cnt} moves!`);
+    } else {
+      alert(`AI won. You lose after ${cnt} moves!`);
+    }
   } else {
-    alert(winner === 1 ? "Black win" : "White win");
+    if (winner === 1) {
+      alert(`Black won after ${cnt} moves!`);
+    } else {
+      alert(`White won after ${cnt} moves!`);
+    }
   }
+
   return true;
 }
 
@@ -124,7 +133,7 @@ async function placeStone(row, col) {
   await setStone(data.row, data.col, player);
   updateTurnIndicator();
   
-  if (level && !check_win(data.winner)) {
+  if (level && !check_win(data.winner, data.count)) {
     player = 2
     isThinking = true;
   
@@ -167,7 +176,7 @@ async function aiTurn() {
   updateTurnIndicator();
   player = 1;
   
-  check_win(data.winner);
+  check_win(data.winner, data.count);
 }
 
 function updateTurnIndicator() {
