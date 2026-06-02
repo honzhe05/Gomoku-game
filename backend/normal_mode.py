@@ -11,14 +11,14 @@ dirs = [
 
 def count_score(cnt):
     if cnt >= 5:
-        return 1000000
-    if cnt == 4:
         return 10000
-    if cnt == 3:
+    if cnt == 4:
         return 1000
-    if cnt == 2:
+    if cnt == 3:
         return 100
-    return 1
+    if cnt == 2:
+        return 10
+    return 0
 
 def line_info(board, i, j, dx, dy, p):
     cnt = 1
