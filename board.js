@@ -10,7 +10,13 @@ let isThinking = false;
 const boardDiv = document.getElementById("Board");
 
 function check_win(winner, cnt) {
-  if (!winner) return false;
+  if (!winner) {
+    if (cnt >== size * size) {
+      alert(`A tie! That's impossible!`)
+      return true;
+    }
+    return false;
+  }
 
   if (level) {
     if (winner === 1) {
