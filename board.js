@@ -128,7 +128,7 @@ async function placeStone(row, col) {
   const res = await fetch(`${API}/move`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ game_id, row, col })
+    body: JSON.stringify({ game_id, row, col, size })
   });
 
   const data = await res.json();
@@ -177,7 +177,7 @@ async function aiTurn() {
   const res = await fetch(`${API}/ai_move`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ game_id, level })
+    body: JSON.stringify({ game_id, level, size })
   });
   
   const data = await res.json();

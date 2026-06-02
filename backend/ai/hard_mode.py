@@ -1,7 +1,7 @@
 import random
 from utils.check_win import check_win
 
-size = 15
+size = 1
 dirs = [
     (1,0),   # |
     (0,1),   # —
@@ -47,18 +47,21 @@ def line_info(board, i, j, dx, dy, p):
 
     return count_score(cnt, open1, open2)
 
-def hard_mode(board):
+def hard_mode(board, s):
+    global size
+    size = s
+    
     for i in range(size):
         for j in range(size):
             if board[i][j] != 0:
                 continue
     
             board[i][j] = 2
-            if check_win(board, i, j, 2):
+            if check_win(board, i, j, 2, size):
                 board[i][j] = 0
                 return i, j
             board[i][j] = 1
-            if check_win(board, i, j, 1):
+            if check_win(board, i, j, 1, size):
                 board[i][j] = 0
                 return i, j
             board[i][j] = 0

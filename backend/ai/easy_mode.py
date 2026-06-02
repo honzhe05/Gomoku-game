@@ -1,21 +1,19 @@
 from utils.check_win import check_win
 import random
 
-size = 15
-
-def easy_mode(board):
+def easy_mode(board, size):
     for i in range(size): # check 4-in-a-row
         for j in range(size):
             if board[i][j] != 0:
                 continue
 
             board[i][j] = 2 # check win
-            if check_win(board, i, j, 2):
+            if check_win(board, i, j, 2, size):
                 board[i][j] = 0
                 return i, j
             
             board[i][j] = 1 # check lose
-            if check_win(board, i, j, 1):
+            if check_win(board, i, j, 1, size):
                 board[i][j] = 0
                 return i, j
                 

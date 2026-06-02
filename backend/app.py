@@ -13,8 +13,8 @@ init_db()
 app = Flask(__name__)
 CORS(app)
 
-size = 15
-board = [[0] * size for _ in range(size)]
+size = 1
+board = []
 player = 1
 move_count = 0
 game_id = 1
@@ -44,10 +44,13 @@ def get_board(game_id):
 
 @app.route("/move", methods=["POST"])
 def move():
+    global size
+  
     data = request.json
     game_id = data["game_id"]
     row = data["row"]
     col = data["col"]
+    size = data["size"]
 
     conn = get_db()
     cur = conn.cursor()
@@ -171,9 +174,12 @@ def reset():
     
 @app.route("/ai_move", methods=["POST"])
 def ai_move():
+    global size
+  
     data = request.json
     level = data["level"]
     game_id = data["game_id"]
+    size = data["size"]
 
     conn = get_db()
     cur = conn.cursor()
@@ -182,11 +188,11 @@ def ai_move():
 
     # choose AI move
     if level == "easy":
-        row, col = easy_mode(board)
+        row, col = easy_mode(board, size)
     elif level == "normal":
-        row, col = normal_mode(board)
+        row, col = normal_mode(board, size)
     elif level == "hard":
-        row, col = hard_mode(board)
+        row, col = hard_mode(board, size)
     else:
         return
 
