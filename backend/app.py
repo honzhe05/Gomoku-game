@@ -83,7 +83,7 @@ def move():
     board = get_board(game_id)
 
     winner = None
-    if check_win(board, row, col, player):
+    if check_win(board, row, col, player, size):
         winner = player
         cur.execute("UPDATE games SET status='finished' WHERE id=?", (game_id,))
 
@@ -214,7 +214,7 @@ def ai_move():
     board = get_board(game_id)
 
     winner = None
-    if check_win(board, row, col, player):
+    if check_win(board, row, col, player, size):
         winner = player
         cur.execute("""
             UPDATE games SET status='finished'
