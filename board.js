@@ -7,7 +7,7 @@ let player = 1;
 let game_id;
 let level = "";
 let isThinking = false;
-let change = false;
+let change = true;
 
 const boardDiv = document.getElementById("Board");
 
@@ -128,7 +128,9 @@ async function initGame() {
   game_id = data.game_id;
   player = data.player;
   
-  await reDraw();
+  if (!change) {
+    await reDraw();
+  }
 }
 
 async function placeStone(row, col) {

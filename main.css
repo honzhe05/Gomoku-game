@@ -27,6 +27,8 @@ button {
   -webkit-tap-highlight-color: transparent;
   outline: none;
   user-select: none;
+  -webkit-appearance: none;
+  appearance: none;
   
   white-space: nowrap;
   overflow: hidden;
