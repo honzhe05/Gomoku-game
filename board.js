@@ -205,7 +205,7 @@ function toSelectLevel() {
   document.getElementById("levelmenu").classList.remove("hidden")
 }
 
-function startAi() {
+async function startAi() {
   document.getElementById("levelmenu").classList.add("hidden")
   document.getElementById("playscreen").classList.remove("hidden");
   document.getElementById("sign").classList.remove("hidden");
@@ -217,12 +217,12 @@ function startAi() {
 
 async function selectEasy() {
   level = "easy";
-  startAi();
+  await startAi();
 }
 
-async function selectEasy() {
+async function selectNormal() {
   level = "normal";
-  startAi();
+  await startAi();
 }
 
 function incom() {
