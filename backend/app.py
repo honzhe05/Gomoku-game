@@ -13,7 +13,8 @@ init_db()
 app = Flask(__name__)
 CORS(app)
 
-board = [[0] * 15 for _ in range(15)]
+size = 15
+board = [[0] * size for _ in range(size)]
 player = 1
 move_count = 0
 game_id = 1
@@ -35,7 +36,7 @@ def get_board(game_id):
 
     moves = cur.fetchall()
 
-    board = [[0]*15 for _ in range(15)]
+    board = [[0]*size for _ in range(size)]
     for r,c,p in moves:
         board[r][c] = p
 

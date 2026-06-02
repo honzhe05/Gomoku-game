@@ -11,8 +11,8 @@ const boardDiv = document.getElementById("Board");
 
 function check_win(winner, cnt) {
   if (!winner) {
-    if (cnt >== size * size) {
-      alert(`A tie! That's impossible!`)
+    if (cnt >= size * size) {
+      alert(`A tie! That's impossible!`);
       return true;
     }
     return false;
@@ -93,8 +93,8 @@ async function reDraw() {
 
   const data = await res.json();
 
-  for (let i = 0; i < 15; i++) {
-    for (let j = 0; j < 15; j++) {
+  for (let i = 0; i < size; i++) {
+    for (let j = 0; j < size; j++) {
       if (data.board[i][j] !== 0 && !cells[i][j].dataset.filled) {
         setStone(i, j, data.board[i][j]);
       }

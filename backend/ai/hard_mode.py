@@ -63,7 +63,7 @@ def hard_mode(board):
                 return i, j
             board[i][j] = 0
           
-    score = [[0]*15 for _ in range(15)]
+    score = [[0]*size for _ in range(size)]
     for i in range(size):
         for j in range(size):
             center = 14 - abs(i-7) - abs(j-7)
