@@ -47,7 +47,7 @@ def line_info(board, i, j, dx, dy, p):
 
     return count_score(cnt, open1, open2)
 
-def normal_mode(board):
+def hard_mode(board):
     for i in range(size):
         for j in range(size):
             if board[i][j] != 0:
@@ -85,15 +85,20 @@ def normal_mode(board):
                 defense *= 1.5 + (defense / 1000000)
                 score[i][j] = attack + defense
                     
-    maxi, pos = 0, (-1, -1)
-    for i in range(size):
+    maxi = 0
+    max_list = []
+    for i in range(size): # select maxscore
         for j in range(size):
-            if score[i][j] > maxi and board[i][j] == 0:
-                maxi = score[i][j]
-                pos = (i, j)
-                
-    if pos != (-1, -1):
-        return pos
+            if board[i][j] == 0:
+                if score[i][j] > maxi:
+                    maxi = score[i][j]
+                    max_list = []
+                    max_list.append((i, j))
+                elif score[i][j] == maxi:
+                    max_list.append((i, j))
+                    
+    if max_list:
+        return random.choice(max_list)
         
     empty = []
     for i in range(size): # random choice
