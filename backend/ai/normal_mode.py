@@ -78,16 +78,21 @@ def normal_mode(board):
                 empty.append((i, j))
      
     t = random.randint(0, 10)
-    if t not in [0, 1, 2]:
-        maxi, pos = 0, (-1, -1)
-        for i in range(size):
+    max_list = []
+    if t not in [0, 1]:
+        maxi = 0
+        for i in range(size): # select maxscore
             for j in range(size):
-                if score[i][j] > maxi and board[i][j] == 0:
-                    maxi = score[i][j]
-                    pos = (i, j)
+                if board[i][j] == 0:
+                    if score[i][j] > maxi:
+                        maxi = score[i][j]
+                        max_list = []
+                        max_list.append((i, j))
+                    elif score[i][j] == maxi:
+                        max_list.append((i, j))
                     
-        if pos != (-1, -1):
-            return pos
+        if max_list:
+            return random.choice(max_list)
         return random.choice(empty)
     else:
         return random.choice(empty)

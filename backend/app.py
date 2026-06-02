@@ -3,8 +3,9 @@ from flask_cors import CORS
 import sqlite3
 import os
 from init_db import init_db
-from easy_mode import easy_mode
-from normal_mode import normal_mode
+from ai.easy_mode import easy_mode
+from ai.normal_mode import normal_mode
+from ai.hard_mode import hard_mode
 from check_win import check_win
 
 init_db()
@@ -182,8 +183,10 @@ def ai_move():
         row, col = easy_mode(board)
     elif level == "normal":
         row, col = normal_mode(board)
-    # else:
-    #     row, col = hard_mode(board)
+    elif level == "hard":
+        row, col = hard_mode(board)
+    else:
+        return
 
     player = 2
 

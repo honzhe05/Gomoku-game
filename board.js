@@ -225,6 +225,11 @@ async function selectNormal() {
   await startAi();
 }
 
+async function selectHard() {
+  level = "hard";
+  await startAi();
+}
+
 function incom() {
   alert("How could that be? (Incomplete)");
 }
