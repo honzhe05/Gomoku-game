@@ -163,16 +163,21 @@ h3 {
   h3 {
     font-size: 11px;
   }
+  #turn-indicator {
+    flex-direction: column;
+  }
 }
 
 #turn-indicator {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
+  gap: 15px;
 }
 
 #turn-stone {
+  margin-top: 18px;
+  margin-left: 5px;
   width: 20px;
   height: 20px;
   border-radius: 50%;

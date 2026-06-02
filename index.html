@@ -48,8 +48,11 @@
         <div class="side-panel">
           <button class="btn" onclick="resetGame()">Reset</button>
           <div id="turn-indicator">
-            <p>Next step:</p>
-            <div id="turn-stone"></div>
+            <p id="diff" class="hidden">Difficulty: loading....</p>
+            <div style="display:flex">
+              <p>Next step:</p>
+              <div id="turn-stone"></div>
+            </div>
           </div>
         </div>
       </div>

@@ -205,6 +205,7 @@ async function backToMain() {
   document.getElementById("sign").classList.add("hidden");
   document.getElementById("playscreen").classList.add("hidden");
   document.getElementById("levelmenu").classList.add("hidden")
+  document.getElementById("diff").classList.add("hidden")
   
   if (level) {
     await initGame();
@@ -222,6 +223,9 @@ async function startAi() {
   document.getElementById("levelmenu").classList.add("hidden")
   document.getElementById("playscreen").classList.remove("hidden");
   document.getElementById("sign").classList.remove("hidden");
+  
+  document.getElementById("diff").textContent = `Difficulty: ${level}`
+  document.getElementById("diff").classList.remove("hidden")
   
   createBoard();
   await initGame();
