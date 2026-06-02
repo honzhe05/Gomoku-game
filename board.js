@@ -205,8 +205,7 @@ function toSelectLevel() {
   document.getElementById("levelmenu").classList.remove("hidden")
 }
 
-async function selectEasy() {
-  level = "easy";
+function startAi() {
   document.getElementById("levelmenu").classList.add("hidden")
   document.getElementById("playscreen").classList.remove("hidden");
   document.getElementById("sign").classList.remove("hidden");
@@ -214,6 +213,16 @@ async function selectEasy() {
   createBoard();
   await initGame();
   await resetGame();
+}
+
+async function selectEasy() {
+  level = "easy";
+  startAi();
+}
+
+async function selectEasy() {
+  level = "normal";
+  startAi();
 }
 
 function incom() {

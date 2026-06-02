@@ -4,6 +4,7 @@ import sqlite3
 import os
 from init_db import init_db
 from easy_mode import easy_mode
+from normal_mode import normal_mode
 from check_win import check_win
 
 init_db()
@@ -179,8 +180,8 @@ def ai_move():
     # choose AI move
     if level == "easy":
         row, col = easy_mode(board)
-    # elif level == "normal":
-    #     row, col = normal_mode(board)
+    elif level == "normal":
+        row, col = normal_mode(board)
     # else:
     #     row, col = hard_mode(board)
 
