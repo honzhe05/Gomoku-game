@@ -1,3 +1,7 @@
+:root {
+  --size: 19;
+}
+
 body {
   background-color: #f7e6d0;
 }
@@ -19,7 +23,7 @@ h3 {
   margin-top: 20px;
 }
 
-.btn {
+button {
   -webkit-tap-highlight-color: transparent;
   outline: none;
   user-select: none;
@@ -29,6 +33,13 @@ h3 {
   text-overflow: ellipsis;
   
   background-color: #63ace2;
+}
+button:hover {
+  background-color: #2d94e0;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn {
   border: 1px solid;
   text-align: center;
   cursor: pointer;
@@ -39,19 +50,25 @@ h3 {
   
   font-size: 15px;
 }
-.btn:hover {
-  background-color: #2d94e0;
-  transition: all 0.2s ease-in-out;
+
+#Change {
+  border: 1px solid;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 15px;
+  width: 190px;
+  height: 25px;
+  margin-bottom: 5px;
 }
 
 #Board {
   display: grid;
-  grid-template-columns: repeat(15, 1fr);
+  grid-template-columns: repeat(var(--size), 1fr);
   width: min(90vw, 550px);
   aspect-ratio: 1;
   margin: auto;
   background: #d8b37a;
-  padding: calc((min(90vw, 550px) / 15) / 4);
+  padding: calc((min(90vw, 550px) / var(--size)) / 4);
   box-sizing: border-box;
 }
 

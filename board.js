@@ -1,11 +1,13 @@
 const API = "https://gomoku-game-xs81.onrender.com";
 
-const size = 15;
+let size = 15;
+document.documentElement.style.setProperty('--size', size);
 const cells = [];
 let player = 1;
 let game_id;
 let level = "";
 let isThinking = false;
+let change = false;
 
 const boardDiv = document.getElementById("Board");
 
@@ -58,11 +60,20 @@ function createBoard() {
       cell.className = "cell";
       
       if (
-        (i === 3 && j === 3) ||
-        (i === 7 && j === 7) ||
-        (i === 3 && j === 11) ||
-        (i === 11 && j === 3) ||
-        (i === 11 && j === 11)
+        size === 15 && (
+          (i === 3 && j === 3) ||
+          (i === 7 && j === 7) ||
+          (i === 3 && j === 11) ||
+          (i === 11 && j === 3) ||
+          (i === 11 && j === 11)
+        ) ||
+        size === 19 && (
+          (i === 4 && j === 4) ||
+          (i === 9 && j === 9) ||
+          (i === 4 && j === 14) ||
+          (i === 14 && j === 4) ||
+          (i === 14 && j === 14)
+        )
       ) {
         const dot = document.createElement("div");
         dot.className = "star-point";
@@ -203,7 +214,12 @@ async function startPlay() {
   
   createBoard();
   await initGame();
-  updateTurnIndicator();
+  if (change) {
+    await resetGame();
+    change = false;
+  } else {
+    updateTurnIndicator();
+  }
 }
 
 async function backToMain() {
@@ -251,6 +267,14 @@ async function selectNormal() {
 async function selectHard() {
   level = "hard";
   await startAi();
+}
+
+function changeSize() {
+  size = (size === 19) ? 15 : 19;
+  document.documentElement.style.setProperty('--size', size);
+  change = true;
+  
+  document.getElementById("Change").textContent = `Board size: ${size}*${size}`;
 }
 
 function incom() {
