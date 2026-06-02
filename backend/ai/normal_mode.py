@@ -1,5 +1,5 @@
 import random
-from check_win import check_win
+from utils.check_win import check_win
 
 size = 15
 dirs = [

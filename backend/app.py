@@ -6,7 +6,7 @@ from init_db import init_db
 from ai.easy_mode import easy_mode
 from ai.normal_mode import normal_mode
 from ai.hard_mode import hard_mode
-from check_win import check_win
+from utils.check_win import check_win
 
 init_db()
 

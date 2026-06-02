@@ -1,4 +1,4 @@
-from check_win import check_win
+from utils.check_win import check_win
 import random
 
 size = 15
