@@ -9,11 +9,15 @@ dirs = [
     (1,-1)   # /
 ]
 
-def count_score(cnt):
+def count_score(cnt, open1, open2):
     if cnt >= 5:
         return 1000000
+    if cnt == 4 and open1 and open2:
+        return 100000
     if cnt == 4:
         return 10000
+    if cnt == 3 and open1 and open2:
+        return 5000
     if cnt == 3:
         return 1000
     if cnt == 2:
@@ -24,18 +28,24 @@ def line_info(board, i, j, dx, dy, p):
     cnt = 1
 
     x, y = i + dx, j + dy
+    open1 = False
     while 0 <= x < size and 0 <= y < size and board[x][y] == p:
         cnt += 1
         x += dx
         y += dy
+    if 0 <= x < size and 0 <= y < size and board[x][y] == 0:
+        open1 = True
 
     x, y = i - dx, j - dy
+    open2 = False
     while 0 <= x < size and 0 <= y < size and board[x][y] == p:
         cnt += 1
         x -= dx
         y -= dy
+    if 0 <= x < size and 0 <= y < size and board[x][y] == 0:
+        open2 = True
 
-    return count_score(cnt)
+    return count_score(cnt, open1, open2)
 
 def normal_mode(board):
     for i in range(size):
@@ -56,6 +66,9 @@ def normal_mode(board):
     score = [[0]*15 for _ in range(15)]
     for i in range(size):
         for j in range(size):
+            center = 14 - abs(i-7) - abs(j-7)
+            score[i][j] += (center * 50)
+            
             if board[i][j] == 0:
                 board[i][j] = 2
                 attack = 0
@@ -69,7 +82,7 @@ def normal_mode(board):
                     
                 board[i][j] = 0
                 
-                defense *= 1.8 + (defense / 1000000)
+                defense *= 1.5 + (defense / 1000000)
                 score[i][j] = attack + defense
                     
     maxi, pos = 0, (-1, -1)
