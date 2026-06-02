@@ -25,10 +25,9 @@ h3 {
 
 button {
   -webkit-tap-highlight-color: transparent;
-  outline: none;
-  user-select: none;
   -webkit-appearance: none;
   appearance: none;
+  user-select: none;
   
   white-space: nowrap;
   overflow: hidden;
