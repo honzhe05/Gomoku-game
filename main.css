@@ -34,6 +34,7 @@ button {
   text-overflow: ellipsis;
   
   background-color: #63ace2;
+  color: black;
 }
 button:hover {
   background-color: #2d94e0;
