@@ -137,6 +137,8 @@ async function placeStone(row, col) {
   if (!game_id) return;
   if (isThinking) return;
   if (player === 2 && level) return;
+  
+  change = false;
 
   const res = await fetch(`${API}/move`, {
     method: "POST",
@@ -218,7 +220,6 @@ async function startPlay() {
   await initGame();
   if (change) {
     await resetGame();
-    change = false;
   } else {
     updateTurnIndicator();
   }
